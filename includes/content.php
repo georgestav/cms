@@ -1,6 +1,5 @@
 <?php
-$query = "SELECT * FROM posts"; // query string for the db
-$select_posts = mysqli_query($data, $query); //import db data for posts
+
 include "scripts/findfeatured.php"; //exported final featured sorting script
 ?>
 
@@ -9,7 +8,7 @@ include "scripts/findfeatured.php"; //exported final featured sorting script
 <div class="col-lg-8">
     <!-- Featured blog post appended with php dynamicaly generated content-->
     <div class="card mb-4">
-        <a href="#!"><img class="card-img-top" src="img/<?php echo $f_image; ?>" alt="" /></a>
+        <a href="post.php?p_id=<?php echo $f_id; ?>"><img class="card-img-top" src="img/<?php echo $f_image; ?>" alt="" /></a>
         <div class="card-body">
             <div class="small text-muted"><?php echo $f_date; ?> By <?php echo $f_author; ?></div>
             <h2 class="card-title"><?php echo $f_title; ?></h2>

@@ -3,7 +3,10 @@ function confirm_query($append)
 {
     global $data;
     if (!$append) {
-        die('Could not write to database: ' . mysqli_error($data));
+        $message = "<div class='alert alert-warning' role='alert'>
+            ❌ Query was not succesful.
+          </div>";
+        die($message . mysqli_error($data));
     } else {
         echo "<div class='alert alert-success' role='alert'>
                         ✅ Your query was successful!

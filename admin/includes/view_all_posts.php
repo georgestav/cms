@@ -35,12 +35,24 @@
             $post_content = $row['post_content'];
             $post_tags = $row['post_tags'];
             $post_comments_count = $row['post_comments_count'];
-            $post_status = $row['post_status']; ?>
+            $post_status = $row['post_status'];
+
+
+            $query = "SELECT * FROM categories WHERE cat_id = {$post_category_id}";
+            $select_categories = mysqli_query($data, $query);
+
+            foreach ($select_categories as $row) {
+                $cat_id = $row['cat_id'];
+                $cat_title = $row['cat_title'];
+            }
+
+        ?>
+
             <tr>
                 <td><?php echo $post_id ?></td>
                 <td><?php echo $post_author ?></td>
                 <td><?php echo $post_title ?></td>
-                <td><?php echo $post_category_id ?></td>
+                <td><?php echo $cat_title ?></td>
                 <td><?php echo $post_status ?></td>
                 <td><img src="../img/<?php echo $post_image ?>" width="100%" alt=""></td>
                 <td><?php echo $post_tags ?></td>
@@ -48,7 +60,7 @@
                 <td><?php echo substr($post_content, 0, 45) ?></td>
                 <td><?php echo $post_comments_count ?></td>
                 <td><a href="posts.php?delete=<?php echo $post_id ?>"> <i class="far fa-trash-alt red" style="color:var(--bs-danger)"></i></a></td>
-                <td><a href="posts.php?edit=<?php echo $post_id ?>"><i class="fas fa-edit"></i></a></td>
+                <td><a href="posts.php?source=edit_post&p_id=<?php echo $post_id ?>"><i class="fas fa-edit"></i></a></td>
 
             </tr>
 

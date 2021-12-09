@@ -24,9 +24,12 @@
                 <nav class="sb-sidenav-menu-nested nav">
                     <a class="nav-link" href="../admin/posts.php">View Posts</a>
                     <a class="nav-link" href="../admin/posts.php?source=add_post">Add posts</a>
-                    <a class="nav-link" href="#">Comments</a>
                 </nav>
             </div>
+            <a class="nav-link" href="comments.php">
+                <div class="sb-nav-link-icon"><i class="far fa-comments"></i></i></div>
+                Comments
+            </a>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                 Users

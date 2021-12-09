@@ -1,5 +1,11 @@
 <?php
-$query = "SELECT * FROM posts"; // query string for the db
+if (isset($_GET['p_id'])) {
+    $p_id = $_GET['p_id'];
+}
+
+
+
+$query = "SELECT * FROM posts WHERE post_id = $p_id"; // query string for the db
 $select_posts = mysqli_query($data, $query); //import db data for posts
 //find the last published post based on current date and set it as featured
 $dates = []; //initialise empty dates array
@@ -39,3 +45,19 @@ $f_content = $featured['post_content'];
 $f_tags = $featured['post_tags'];
 $f_comments_count = $featured['post_comments_count'];
 $f_status = $featured['post_status'];
+?>
+
+<!-- Page content-->
+<!-- Blog entries-->
+<div class="col-lg-8">
+    <!-- Featured blog post appended with php dynamicaly generated content-->
+    <div class="card mb-4">
+        <a href="#!"><img class="card-img-top" src="img/<?php echo $f_image; ?>" alt="" /></a>
+        <div class="card-body">
+            <div class="small text-muted"><?php echo $f_date; ?> By <?php echo $f_author; ?></div>
+            <h2 class="card-title"><?php echo $f_title; ?></h2>
+            <p class="card-text"><?php echo substr($f_content, 0, 150) . '...'; ?></p>
+            <a class="btn btn-primary" href="#!">Read more →</a>
+        </div>
+    </div>
+    <?php include 'includes/comments.php' ?>

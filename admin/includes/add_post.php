@@ -12,7 +12,7 @@ if (isset($_POST['submit_post'])) {
 
     $post_tags = $_POST['post_tags'];
     $post_title = $_POST['post_title'];
-    $post_content = $_POST['post_content'];
+    $post_content = mysqli_real_escape_string($data, $_POST['post_content']);
     $post_comment_count = 4;
     $post_status = 'pending';
 
@@ -38,12 +38,24 @@ if (isset($_POST['submit_post'])) {
                 <input type="number" class="form-control " name="post_id" placeholder="PID" disabled>
             </div>
             <div class="col col-md-3">
-                <label for="post_category_id" class="form-label">Post Category ID *</label>
+                <label for="post_category_id" class="form-label">Post Category *</label>
                 <select type="form-select" class="form-select" name="post_category_id" placeholder="Post category ID">
                     <option selected>Select one</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <!-- generate categories -->
+                    <?php
+                    $query = "SELECT * FROM categories";
+                    $select_categories = mysqli_query($data, $query);
+                    confirm_query($select_categories);
+
+
+                    foreach ($select_categories as $row) {
+                        $cat_id = $row['cat_id'];
+                        $cat_title = $row['cat_title'];
+
+                        echo "<option value='$cat_id'>$cat_title</option>";
+                    }
+
+                    ?>
                 </select>
             </div>
             <div class="col col-md-3">
@@ -73,7 +85,7 @@ if (isset($_POST['submit_post'])) {
         </div>
         <div class="row gy-1">
             <div class="col col-md-12">
-                <label for="post_content" class="form-label">Content textarea *</label>
+                <label for="post_content" class="form-label">Content text area *</label>
                 <textarea class="form-control" name="post_content" rows="5"></textarea>
             </div>
         </div>

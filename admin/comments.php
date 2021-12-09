@@ -13,7 +13,7 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">View Posts</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Dashboard > Posts</li>
+                        <li class="breadcrumb-item active">Dashboard > Comments</li>
                     </ol>
                     <?php
                     if (isset($_GET['source'])) {
@@ -30,7 +30,7 @@
 
                         default;
 
-                            include "includes/view_all_posts.php";
+                            include "includes/view_all_comments.php";
                             break;
                     }
 
