@@ -44,16 +44,16 @@
 
             <tr>
                 <td><?php echo $comment_id ?></td>
-                <td><?php echo $post_title ?></td>
+                <td><a class="text-decoration-none" href="../post.php?p_id=<?php echo $post_id ?>"><?php echo $post_title ?></a></td>
                 <td><?php echo $comment_date ?></td>
                 <td><?php echo $comment_author ?></td>
                 <td><?php echo $comment_email ?></td>
                 <td><?php echo $comment_status ?></td>
                 <td><?php echo substr($comment_content, 0, 45) ?></td>
-                <td><a href="comments.php?approve=<?php echo $comment_id ?>"><i class="fas fa-check"></i></td>
-                <td><a href="comments.php?reject=<?php echo $comment_id ?>"><i class="fas fa-ban"></i></td>
-                <td><a href="comments.php?source=edit_post&c_id=<?php echo $comment_id ?>"><i class="fas fa-edit"></i></a></td>
+                <td><a href="comments.php?approve=<?php echo $comment_id ?>"><i class="fas fa-check text-muted"></i></td>
+                <td><a href="comments.php?reject=<?php echo $comment_id ?>"><i class="fas fa-ban text-muted"></i></td>
                 <td><a href="comments.php?delete=<?php echo $comment_id ?>"> <i class="far fa-trash-alt red" style="color:var(--bs-danger)"></i></a></td>
+                <td><a><i class="fas fa-edit text-muted"></i></a></td>
             </tr>
 
         <?php

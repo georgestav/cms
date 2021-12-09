@@ -11,7 +11,7 @@
             <th>Date</th>
             <th>Content</th>
             <th>Number of comments</th>
-            <th colspan="2">Actions</th>
+            <th colspan="4">Actions</th>
         </tr>
     </thead>
     <tboby>
@@ -59,8 +59,10 @@
                 <td><?php echo $post_date ?></td>
                 <td><?php echo substr($post_content, 0, 45) ?></td>
                 <td><?php echo $post_comments_count ?></td>
-                <td><a href="posts.php?delete=<?php echo $post_id ?>"> <i class="far fa-trash-alt red" style="color:var(--bs-danger)"></i></a></td>
+                <td><a href="posts.php?publish=<?php echo $post_id ?>"><i class="fas fa-check text-muted"></i></td>
+                <td><a href="posts.php?reject=<?php echo $post_id ?>"><i class="fas fa-ban text-muted"></i></td>
                 <td><a href="posts.php?source=edit_post&p_id=<?php echo $post_id ?>"><i class="fas fa-edit"></i></a></td>
+                <td><a href="posts.php?delete=<?php echo $post_id ?>"> <i class="far fa-trash-alt red" style="color:var(--bs-danger)"></i></a></td>
 
             </tr>
 
@@ -76,6 +78,23 @@
 if (isset($_GET['delete'])) {
     $to_delete = $_GET['delete'];
     $query = "DELETE FROM `posts` WHERE `posts`.`post_id` = {$to_delete};";
+
+    $append = mysqli_query($data, $query);
+    header("Location:posts.php");
+    confirm_query($append);
+}
+if (isset($_GET['reject'])) {
+    $to_reject = $_GET['reject'];
+    $query = "UPDATE `posts` SET `post_status` = 'rejected' WHERE `posts`.`post_id` = $to_reject;";
+
+    $append = mysqli_query($data, $query);
+    header("Location:posts.php");
+    confirm_query($append);
+}
+
+if (isset($_GET['publish'])) {
+    $to_approve = $_GET['publish'];
+    $query = "UPDATE `posts` SET `post_status` = 'published' WHERE `posts`.`post_id` = $to_approve;";
 
     $append = mysqli_query($data, $query);
     header("Location:posts.php");

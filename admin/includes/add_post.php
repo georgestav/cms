@@ -13,13 +13,13 @@ if (isset($_POST['submit_post'])) {
     $post_tags = $_POST['post_tags'];
     $post_title = $_POST['post_title'];
     $post_content = mysqli_real_escape_string($data, $_POST['post_content']);
-    $post_comment_count = 4;
+    // $post_comment_count = 4;
     $post_status = 'pending';
 
     move_uploaded_file($post_image_temp, "../img/$post_image");
 
-    $query = "INSERT INTO `posts` (`post_category_id`, `post_title`, `post_author`, `post_date`, `post_image`, `post_content`, `post_tags`, `post_comments_count`, `post_status`) ";
-    $query .= "VALUES ('$post_category_id', '$post_title', '$post_author', '$post_date', '$post_image', '$post_content', '$post_tags', '$post_comment_count', '$post_status')";
+    $query = "INSERT INTO `posts` (`post_category_id`, `post_title`, `post_author`, `post_date`, `post_image`, `post_content`, `post_tags`, `post_status`) ";
+    $query .= "VALUES ('$post_category_id', '$post_title', '$post_author', '$post_date', '$post_image', '$post_content', '$post_tags', '$post_status')";
 
     $append = mysqli_query($data, $query);
     confirm_query($append);

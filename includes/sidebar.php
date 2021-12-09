@@ -27,13 +27,15 @@
                     <ul class="list-unstyled mb-0">
                         <?php
 
-                        $query = "SELECT * FROM categories";
-                        $select_categories = mysqli_query($data, $query);
-                        while ($row = mysqli_fetch_assoc($select_categories)) {
+                        $query = "SELECT * FROM categories"; //select all the categories
+                        $select_categories = mysqli_query($data, $query); //do the query
+
+                        foreach ($select_categories as $row) {
                             $cat_title = $row['cat_title'];
                             $cat_id = $row['cat_id'];
                             echo "<li><a href='category.php?cat_id=$cat_id'>$cat_title</a></li>";
                         }
+
 
                         ?>
 

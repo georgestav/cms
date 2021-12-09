@@ -1,5 +1,5 @@
 <?php
-$query = "SELECT * FROM posts"; // query string for the db
+$query = "SELECT * FROM posts WHERE post_status = 'published'"; // query string for the db
 $select_posts = mysqli_query($data, $query); //import db data for posts
 //find the last published post based on current date and set it as featured
 $dates = []; //initialise empty dates array

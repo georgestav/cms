@@ -56,8 +56,7 @@ $f_status = $featured['post_status'];
         <div class="card-body">
             <div class="small text-muted"><?php echo $f_date; ?> By <?php echo $f_author; ?></div>
             <h2 class="card-title"><?php echo $f_title; ?></h2>
-            <p class="card-text"><?php echo substr($f_content, 0, 150) . '...'; ?></p>
-            <a class="btn btn-primary" href="#!">Read more →</a>
+            <p class="card-text"><?php echo $f_content; ?></p>
         </div>
     </div>
     <?php include 'includes/comments.php' ?>
