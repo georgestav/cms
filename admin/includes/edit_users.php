@@ -64,7 +64,7 @@ if (isset($_POST['update_user'])) {
             <div class="col col-md-2">
                 <label for="user_role" class="form-label">User Role *</label>
                 <select type="form-select" class="form-select" name="user_role">
-                    <option value='<?php echo ucfirst($f_user_role) ?>' selected disabled><?php echo ucfirst($f_user_role) ?></option>
+                    <option value='<?php echo $f_user_role ?>' selected><?php echo ucfirst($f_user_role) ?></option>
                     <?php if ($f_user_role == 'admin') {
                         echo "<option value='user'>User</option>";
                     } else {

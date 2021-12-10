@@ -15,6 +15,7 @@
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
                 </div>
+                <?php include "includes/admin_widgets.php" ?>
             </main>
             <!-- footer -->
             <?php include "includes/admin_footer.php" ?>

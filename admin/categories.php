@@ -25,9 +25,9 @@
                                 <form action="categories.php" method="post">
                                     <div class="form-group">
                                         <label for="cat_title">Add Category</label>
-                                        <input class="form-control" type="text" name="cat_title_add">
+                                        <input class="form-control mt-1" type="text" name="cat_title_add">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group mt-2">
                                         <input class="btn btn-outline-primary" type="submit" name="submit" value="Add Category">
                                     </div>
                                 </form>
