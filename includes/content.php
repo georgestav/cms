@@ -20,8 +20,8 @@ include "scripts/findfeatured.php"; //exported final featured sorting script
 
     <!-- Nested row for non-featured blog posts-->
     <!-- <div class="d-flex flex-wrap"> -->
-    <div class="container">
-        <div class="row g-2">
+    <div class="container p-0 mb-5">
+        <div class="row">
             <!-- Blog post-->
             <?php
 
@@ -41,7 +41,7 @@ include "scripts/findfeatured.php"; //exported final featured sorting script
                 $card_comments_count = $card['post_comments_count'];
                 $card_status = $card['post_status'];
             ?>
-                <div class="col-md-6">
+                <div class="col-md-6 gy-2">
                     <div class="card ">
                         <a href="post.php?p_id=<?php echo $card_id ?>"><img class="card-img-top" style="height: 35%;" src="img/<?php echo $card_image ?>" alt="..." /></a>
                         <div class="card-body">
