@@ -13,6 +13,22 @@ function confirm_query($append)
                       </div>";
     }
 }
+
+function confirm_query_posts($append, $post_id)
+{
+    global $data;
+    if (!$append) {
+        $message = "<div class='alert alert-warning' role='alert'>
+            ❌ Query was not succesful.
+          </div>";
+        die($message . mysqli_error($data));
+    } else {
+?>
+        <div class='alert alert-success' role='alert'>
+            ✅ Your query was successful! View it live: <a href="../post.php?p_id=<?php echo $post_id ?>" target="_blank">here</a>
+        </div>
+    <?php }
+}
 // add a category
 function insert_categories()
 {
@@ -48,7 +64,7 @@ function display_categories()
     $categories = mysqli_fetch_all(mysqli_query($data, $query), MYSQLI_ASSOC);
 
     foreach ($categories as $category) {
-?>
+    ?>
         <tr>
             <td><?php echo $category['cat_id'] ?></td>
             <td><?php echo $category['cat_title'] ?></td>

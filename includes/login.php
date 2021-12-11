@@ -27,7 +27,7 @@ if (isset($_POST['login'])) {
         $user_randSalt = $db_user['user_randSalt'];
         $user_date = $db_user['user_date'];
     }
-    if ($username === $user_name && $password === $user_password) {
+    if ($username === $user_name && $password === $user_password && $user_role === "admin") {
         $_SESSION['user_id'] = $db_user['user_id'];
         $_SESSION['username'] = $db_user['user_name'];
         $_SESSION['user_firstname'] = $db_user['user_firstname'];
@@ -35,6 +35,15 @@ if (isset($_POST['login'])) {
         $_SESSION['user_email'] = $db_user['user_email'];
         $_SESSION['user_role'] = $db_user['user_role'];
         header("Location:../admin");
+    } else if ($username === $user_name && $password === $user_password) {
+        $_SESSION['user_id'] = $db_user['user_id'];
+        $_SESSION['username'] = $db_user['user_name'];
+        $_SESSION['user_firstname'] = $db_user['user_firstname'];
+        $_SESSION['user_lastname'] = $db_user['user_lastname'];
+        $_SESSION['user_email'] = $db_user['user_email'];
+        $_SESSION['user_role'] = $db_user['user_role'];
+        header("Location:../admin");
+        header("Location:../");
     } else {
         header("Location:../");
     }

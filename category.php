@@ -19,7 +19,7 @@ include 'includes/header.php';
                     $cat_id = $_GET['cat_id'];
                 }
 
-                $query = "SELECT * FROM posts WHERE post_category_id = $cat_id"; // query string for the db
+                $query = "SELECT * FROM posts WHERE post_category_id = $cat_id AND post_status = 'published'"; // query string for the db
                 $select_posts = mysqli_query($data, $query); //import db data for posts
 
 
@@ -45,7 +45,7 @@ include 'includes/header.php';
                             <div class="small text-muted"><?php echo $p_date; ?> By <?php echo $p_author; ?></div>
                             <h2 class="card-title"><?php echo $p_title; ?></h2>
                             <p class="card-text"><?php echo substr($p_content, 0, 150) . '...'; ?></p>
-                            <a class="btn btn-primary" href="post.php?p_id=<?php echo $p_id; ?>">Read more →</a>
+                            <a class="btn btn-outline-secondary btn-sm float-end" href="post.php?p_id=<?php echo $p_id; ?>">Read more →</a>
                         </div>
                     </div>
                 <?php

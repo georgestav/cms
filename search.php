@@ -20,7 +20,7 @@ include 'includes/header.php';
                     if (!$count) {
                         echo 'No posts found, try another search';
                     } else {
-                        echo $count . ' posts found';
+                        echo $count . ' posts found with matching tags of ' . $_POST['search'];
                     }
 
                     foreach (mysqli_fetch_all($search_query, MYSQLI_ASSOC) as $post) {
@@ -36,16 +36,17 @@ include 'includes/header.php';
                         $post_status = $post['post_status'];
 
                     ?>
-                        <div class="card mb-4">
+                        <div class="card mb-2 mt-2">
                             <div class="card-body">
                                 <div class="small text-muted"><?php echo $post_date; ?></div>
                                 <h2 class="card-title h4"><?php echo $post_title; ?></h2>
                                 <p class="card-text"><?php echo substr($post_content, 0, 150); ?></p>
-                                <a class="btn btn-primary" href="#!">Read more →</a>
+                                <a class="btn btn-outline-secondary btn-sm float-end" href="post.php?p_id=<?php echo $post_id; ?>">Read more →</a>
                             </div>
                         </div>
 
                     <?php }
+
                     ?>
 
                 </div>
@@ -53,6 +54,7 @@ include 'includes/header.php';
                 <?php include "includes/sidebar.php" ?>
             </div>
         </div>
+    </div>
     </div>
 
 

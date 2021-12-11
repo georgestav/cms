@@ -51,7 +51,7 @@
             <tr>
                 <td><?php echo $post_id ?></td>
                 <td><?php echo $post_author ?></td>
-                <td><?php echo $post_title ?></td>
+                <td><a style="text-decoration: none;" target="_blank" href="../post.php?p_id=<?php echo $post_id ?>"><?php echo $post_title ?></a></td>
                 <td><?php echo $cat_title ?></td>
                 <td><?php echo $post_status ?></td>
                 <td><img src="../img/<?php echo $post_image ?>" width="100%" alt=""></td>
@@ -60,14 +60,11 @@
                 <td><?php echo substr($post_content, 0, 45) ?></td>
                 <td><?php echo $post_comments_count ?></td>
                 <td><a href="posts.php?publish=<?php echo $post_id ?>"><i class="fas fa-check text-muted"></i></td>
-                <td><a href="posts.php?reject=<?php echo $post_id ?>"><i class="fas fa-ban text-muted"></i></td>
+                <td><a href="posts.php?unpublish=<?php echo $post_id ?>"><i class="fas fa-ban text-muted"></i></td>
                 <td><a href="posts.php?source=edit_post&p_id=<?php echo $post_id ?>"><i class="fas fa-edit"></i></a></td>
                 <td><a href="posts.php?delete=<?php echo $post_id ?>"> <i class="far fa-trash-alt red" style="color:var(--bs-danger)"></i></a></td>
 
             </tr>
-
-
-
         <?php
         } ?>
 
@@ -83,9 +80,9 @@ if (isset($_GET['delete'])) {
     header("Location:posts.php");
     confirm_query($append);
 }
-if (isset($_GET['reject'])) {
-    $to_reject = $_GET['reject'];
-    $query = "UPDATE `posts` SET `post_status` = 'rejected' WHERE `posts`.`post_id` = $to_reject;";
+if (isset($_GET['unpublish'])) {
+    $to_unpublish = $_GET['unpublish'];
+    $query = "UPDATE `posts` SET `post_status` = 'unpublished' WHERE `posts`.`post_id` = $to_unpublish;";
 
     $append = mysqli_query($data, $query);
     header("Location:posts.php");

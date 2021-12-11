@@ -13,7 +13,7 @@ include "scripts/findfeatured.php"; //exported final featured sorting script
             <div class="small text-muted"><?php echo $f_date; ?> By <?php echo $f_author; ?></div>
             <h2 class="card-title"><?php echo $f_title; ?></h2>
             <p class="card-text"><?php echo substr($f_content, 0, 150) . '...'; ?></p>
-            <a class="btn btn-primary" href="post.php?p_id=<?php echo $f_id; ?>">Read more →</a>
+            <a class="btn btn-outline-secondary btn-sm float-end" href="post.php?p_id=<?php echo $f_id; ?>">Read more →</a>
         </div>
     </div>
 
@@ -42,14 +42,14 @@ include "scripts/findfeatured.php"; //exported final featured sorting script
                 $card_status = $card['post_status'];
             ?>
                 <div class="col-md-6 gy-2">
-                    <div class="card ">
-                        <a href="post.php?p_id=<?php echo $card_id ?>"><img class="card-img-top" style="height: 35%;" src="img/<?php echo $card_image ?>" alt="..." /></a>
+                    <div class="card h-100">
+                        <a href="post.php?p_id=<?php echo $card_id ?>"><img class="card-img-top" src="img/<?php echo $card_image ?>" alt="..." /></a>
                         <div class="card-body">
                             <div class="small text-muted"><?php echo $card_date ?></div>
                             <h2 class="card-title h4"><?php echo $card_title ?></h2>
                             <p class="card-text"><?php echo substr($card_content, 0, 150) . "..." ?></p>
-                            <a class="btn btn-primary" href="post.php?p_id=<?php echo $card_id ?>">Read more →</a>
                         </div>
+                        <a class="btn btn-outline-secondary rounded-0 rounded-bottom btn-sm" href="post.php?p_id=<?php echo $card_id ?>">Read more →</a>
                     </div>
                 </div>
             <?php

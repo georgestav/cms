@@ -34,8 +34,7 @@ if (isset($_POST['update_post'])) {
     $post_tags = $_POST['post_tags'];
     $post_title = $_POST['post_title'];
     $post_content = $_POST['post_content'];
-    $post_comment_count = 4;
-    $post_status = 'pending';
+    $post_status = $_POST['post_status'];
 
     move_uploaded_file($post_image_temp, "../images/$post_image");
     if (empty($post_image)) {
@@ -47,14 +46,39 @@ if (isset($_POST['update_post'])) {
         }
     }
 
-    $query = "UPDATE `posts` SET `post_category_id` = '$post_category_id', `post_title` = '$post_title', `post_author` = '$post_author', `post_image` = '$post_image', `post_content` = '$post_content', `post_tags` = '$post_tags' WHERE `posts`.`post_id` = $post_id";
+    $query = "UPDATE `posts` SET `post_category_id` = '$post_category_id', `post_title` = '$post_title', `post_author` = '$post_author', `post_image` = '$post_image', `post_content` = '$post_content',`post_status` = '$post_status', `post_tags` = '$post_tags' WHERE `posts`.`post_id` = $post_id";
 
 
     $append = mysqli_query($data, $query);
 
-    confirm_query($append);
+    confirm_query_posts($append, $post_id);
 }
 ?>
+
+<?php
+$query = "SELECT * FROM categories WHERE cat_id = {$fetched_post_category_id}";
+$selected_categ = mysqli_query($data, $query);
+
+$selected_categ = mysqli_fetch_array($selected_categ, MYSQLI_ASSOC);
+
+?>
+
+<script>
+    $('#summernote').summernote({
+        placeholder: 'Hello stand alone ui',
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+</script>
 
 <form action="" method="post" enctype="multipart/form-data">
     <div class="row">
@@ -65,14 +89,13 @@ if (isset($_POST['update_post'])) {
             </div>
             <div class="col col-md-3">
                 <label for="post_category_id" class="form-label">Post Category ID *</label>
-                <select type="form-select" class="form-select" name="post_category_id" placeholder="Post category ID">
-                    <option selected value="<?php echo $fetched_post_category_id ?>">Select one</option>
+                <select type="form-select" class="form-select" name="post_category_id" placeholder="Post category ID" required>
+                    <option selected value="<?php echo $fetched_post_category_id ?>"><?php echo $selected_categ['cat_title'] ?></option>
                     <!-- generate categories -->
                     <?php
-                    $query = "SELECT * FROM categories";
+                    $query = "SELECT * FROM categories WHERE cat_id <> $fetched_post_category_id";
                     $select_categories = mysqli_query($data, $query);
                     confirm_query($select_categories);
-
 
                     foreach ($select_categories as $row) {
                         $cat_id = $row['cat_id'];
@@ -87,11 +110,11 @@ if (isset($_POST['update_post'])) {
             </div>
             <div class="col col-md-3">
                 <label for="post_id" class="form-label">Date *</label>
-                <input type="date" class="form-control" name="post_date" value="<?php echo $fetched_post_date ?>">
+                <input type="date" class="form-control" name="post_date" value="<?php echo $fetched_post_date ?>" required>
             </div>
             <div class="col col-md-5">
                 <label for="post_author" class="form-label">Author *</label>
-                <input type="text" class="form-control" name="post_author" value="<?php echo $fetched_post_author ?>">
+                <input type="text" class="form-control" name="post_author" value="<?php echo $fetched_post_author ?>" required>
             </div>
         </div>
         <div class="row gy-2">
@@ -102,19 +125,39 @@ if (isset($_POST['update_post'])) {
             </div>
         </div>
         <div class="row gy-1">
-            <div class="col col-md-4">
+            <div class="col col-md-3">
                 <label for="post_tags" class="form-label">Tags related to the post *</label>
-                <input type="text" class="form-control" name="post_tags" value="<?php echo $fetched_post_tags ?>">
+                <input type="text" class="form-control" name="post_tags" value="<?php echo $fetched_post_tags ?>" required>
             </div>
-            <div class="col col-md-8">
+            <div class="col col-md-6">
                 <label for="post_title" class="form-label">Title *</label>
-                <input type="text" class="form-control" name="post_title" value="<?php echo $fetched_post_title ?>">
+                <input type="text" class="form-control" name="post_title" value="<?php echo $fetched_post_title ?>" required>
+            </div>
+            <div class="col col-md-3">
+                <label for="post_status" class="form-label">Post Status *</label>
+                <select type="form-select" class="form-select" name="post_status" placeholder="post_status" required>
+                    <option value="<?php echo $fetched_post_status ?>" selected><?php echo $fetched_post_status ?></option>
+                    <?php
+                    if ($fetched_post_status === 'pending') {
+                        echo "<option value='unpublished'>Unpublish</option>";
+                        echo "<option value='published'>Publish</option>";
+                    } else if ($fetched_post_status === 'unpublished') {
+                        echo "<option value='published'>Publish</option>";
+                    } else {
+                        echo "<option value='unpublished'>Unpublish</option>";
+                    }
+
+
+                    ?>
+
+                </select>
             </div>
         </div>
         <div class="row gy-1">
             <div class="col col-md-12">
                 <label for="post_content" class="form-label">Content text area *</label>
-                <textarea class="form-control" name="post_content" rows="5"><?php echo $fetched_post_content ?></textarea>
+
+                <textarea id="summernote" class="form-control" name="post_content" rows="8" required><?php echo $fetched_post_content ?></textarea>
             </div>
         </div>
         <div class="form-group gy-4">
@@ -129,3 +172,9 @@ if (isset($_POST['update_post'])) {
 
 
 </form>
+
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote();
+    });
+</script>

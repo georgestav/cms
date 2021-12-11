@@ -7,17 +7,24 @@
                     $comment_email = $_POST['comment_email'];
                     $comment_content = $_POST['comment_content'];
 
-                    $query_create_comment = "INSERT INTO `comments` (`comment_post_id`, `comment_date`, `comment_author`, `comment_email`, `comment_content`) ";
-                    $query_create_comment .= "VALUES ('$comment_post_id', '$comment_date', '$comment_author', '$comment_email', '$comment_content')";
+                    if (empty($comment_author) || empty($comment_email) || empty($comment_content)) {
+                        $message = "<div class='alert alert-warning' role='alert'>❌ Query was not succesful. You need to fill out all the fields.</div>";
+                        echo ($message);
+                    } else {
 
-                    $create_comment = mysqli_query($data, $query_create_comment);
-                    include_once "admin/functions.php";
-                    confirm_query($create_comment);
 
-                    $p_id = $_GET['p_id'];
-                    $query = "UPDATE posts SET post_comments_count = post_comments_count + 1 ";
-                    $query .= "WHERE post_id =$p_id";
-                    $update_comment_count = mysqli_query($data, $query);
+                        $query_create_comment = "INSERT INTO `comments` (`comment_post_id`, `comment_date`, `comment_author`, `comment_email`, `comment_content`) ";
+                        $query_create_comment .= "VALUES ('$comment_post_id', '$comment_date', '$comment_author', '$comment_email', '$comment_content')";
+
+                        $create_comment = mysqli_query($data, $query_create_comment);
+                        include_once "admin/functions.php";
+                        confirm_query($create_comment);
+
+                        $p_id = $_GET['p_id'];
+                        $query = "UPDATE posts SET post_comments_count = post_comments_count + 1 ";
+                        $query .= "WHERE post_id =$p_id";
+                        $update_comment_count = mysqli_query($data, $query);
+                    }
                 }
                 ?>
 
@@ -27,13 +34,13 @@
                     <form action="" role="form" method="post">
 
                         <div class="form-group">
-                            <input type="text" class="form-control m-1" name="comment_author" placeholder="Your Name">
-                            <input type="email" class="form-control m-1" name="comment_email" placeholder="Your email">
+                            <input type="text" class="form-control m-1" name="comment_author" placeholder="Your Name" required>
+                            <input type="email" class="form-control m-1" name="comment_email" placeholder="Your email" required>
                         </div>
 
 
                         <div class="form-group ">
-                            <textarea class="form-control m-1" rows="3" name="comment_content" placeholder="Your comment"></textarea>
+                            <textarea class="form-control m-1" rows="3" name="comment_content" placeholder="Your comment" required></textarea>
                         </div>
 
                         <button type="submit" name="submit_comment" class="btn btn-primary m-2">Submit</button>

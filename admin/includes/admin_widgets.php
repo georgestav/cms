@@ -1,7 +1,7 @@
        <!-- /.row -->
 
        <div class="row m-auto">
-           <div class="col-lg-3 col-md-6">
+           <div class="col-lg-3 col-sm-6 mt-2">
                <div class="text-center">
                    <div class="row">
                        <div class="col-xs-3">
@@ -19,14 +19,27 @@
                        </div>
                    </div>
                    <a href="posts.php">
-                       <div class="btn btn-sm btn-outline-warning">
+                       <div class="btn btn-sm btn-outline-success position-relative">
+                           <?php
+                            $query = "SELECT * FROM posts WHERE post_status = 'pending'";
+                            $select_all_new = mysqli_query($data, $query);
+                            $number_of_new = mysqli_num_rows($select_all_new);
+                            if ($number_of_new > 0) {
+                            ?>
+                               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                   + <?php echo $number_of_new ?>
+                                   <span class="visually-hidden">pending posts</span>
+                               </span>
+                           <?php
+                            }
+                            ?>
                            <span class="">View Details</span>
                            <span class=""><i class="fa fa-arrow-circle-right"></i></span>
                        </div>
                    </a>
                </div>
            </div>
-           <div class="col-lg-3 col-md-6">
+           <div class="col-lg-3 col-sm-6 mt-2">
                <div class="text-center">
                    <div class="row">
                        <div class="col-xs-3">
@@ -65,7 +78,7 @@
                    </a>
                </div>
            </div>
-           <div class="col-lg-3 col-md-6">
+           <div class="col-lg-3 col-sm-6 mt-2">
                <div class="text-center">
                    <div class="row">
                        <div class="col-xs-3">
@@ -90,7 +103,7 @@
                    </a>
                </div>
            </div>
-           <div class="col-lg-3 col-md-6">
+           <div class="col-lg-3 col-sm-6 mt-2">
                <div class="text-center">
                    <div class="row">
                        <div class="col-xs-3">
@@ -117,3 +130,62 @@
            </div>
        </div>
        <!-- /.row -->
+       <?php
+        $query = "SELECT * FROM comments WHERE comment_status = 'pending'";
+        $select_pending_comments = mysqli_query($data, $query);
+        $number_pending_comments = mysqli_num_rows($select_pending_comments);
+
+        $query = "SELECT * FROM posts WHERE post_status <> 'published'";
+        $select_unpub_posts = mysqli_query($data, $query);
+        $number_unpub_posts = mysqli_num_rows($select_unpub_posts);
+
+        $query = "SELECT * FROM users WHERE user_role = 'pending'";
+        $select_pending_users = mysqli_query($data, $query);
+        $number_pending_users = mysqli_num_rows($select_pending_users);
+
+        $query = "SELECT * FROM categories WHERE cat_id = 0";
+        $select_pending_categories = mysqli_query($data, $query);
+        $number_pending_categories = mysqli_num_rows($select_pending_categories);
+        ?>
+
+
+
+
+       <script type="text/javascript">
+           google.charts.load('current', {
+               'packages': ['bar']
+           });
+           google.charts.setOnLoadCallback(drawChart);
+
+           function drawChart() {
+               let data = google.visualization.arrayToDataTable([
+                   ['Data', 'Count', 'Pending'],
+                   <?php
+                    $element_text = ['Posts', 'Comments', 'Users', 'Categories',];
+                    $element_count = [$number_of_posts - $number_unpub_posts, $number_of_comments - $number_pending_comments, $number_of_users, $number_of_categories];
+                    $pending_count = [$number_unpub_posts, $number_pending_comments, $number_pending_users, $number_pending_categories];
+
+                    for ($i = 0; $i < 4; $i++) {
+                        echo "['{$element_text[$i]}', {$element_count[$i]},{$pending_count[$i]}],";
+                    }
+
+                    ?>
+               ]);
+
+               let options = {
+                   chart: {
+                       title: '',
+                       subtitle: '',
+                   }
+               };
+
+               let chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+               chart.draw(data, google.charts.Bar.convertOptions(options));
+           }
+       </script>
+
+
+       <div class="m-5">
+           <div class="m-auto" id="columnchart_material" style="width: 50%; height: 100%;"></div>
+       </div>

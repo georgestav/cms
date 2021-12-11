@@ -16,6 +16,8 @@
                     </ol>
                 </div>
                 <?php include "includes/admin_widgets.php" ?>
+                <div class="row mt-3"></div>
+                <?php include "includes/charts.php" ?>
             </main>
             <!-- footer -->
             <?php include "includes/admin_footer.php" ?>
