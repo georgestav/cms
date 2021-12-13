@@ -16,7 +16,7 @@ include 'includes/header.php';
             <div class="col-lg-8">
                 <?php
                 if (isset($_GET['cat_id'])) {
-                    $cat_id = $_GET['cat_id'];
+                    $cat_id = mysqli_real_escape_string($data, $_GET['cat_id']);
                 }
 
                 $query = "SELECT * FROM posts WHERE post_category_id = $cat_id AND post_status = 'published'"; // query string for the db

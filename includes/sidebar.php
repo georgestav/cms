@@ -18,7 +18,7 @@
 
     <!-- Login  -->
     <div class="card mb-3">
-        <div class="card-header">Login</div>
+        <div class="card-header">Login to access the admin</div>
         <?php
         if (isset($_SESSION['username'])) {
         ?>
@@ -32,7 +32,9 @@
         } else {
         ?>
             <form action="includes/login.php" method="post" class="form-floating">
+
                 <div class="card-body ">
+
                     <div class="form-floating mb-2">
                         <input type="text" class="form-control" id="floatingInput" placeholder="username" name="user_name">
                         <label for="floatingInput">Username</label>
@@ -41,8 +43,11 @@
                         <input type="password" class="form-control" id="floatingPassword" placeholder="password" name="user_password">
                         <label for="floatingPassword">Password</label>
                     </div>
-                    <div class="d-grid gap-2">
+                    <div class="d-grid gap-2 mb-2">
                         <button class="btn btn-outline-primary" id="login" name="login" type="submit">Login</button>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a style='text-decoration: none;' href="registration.php">Register</a>
                     </div>
                 </div>
             </form>

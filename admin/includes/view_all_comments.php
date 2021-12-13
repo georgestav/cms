@@ -52,8 +52,7 @@
                 <td><?php echo substr($comment_content, 0, 45) ?></td>
                 <td><a href="comments.php?approve=<?php echo $comment_id ?>"><i class="fas fa-check text-muted"></i></td>
                 <td><a href="comments.php?reject=<?php echo $comment_id ?>"><i class="fas fa-ban text-muted"></i></td>
-                <td><a href="comments.php?delete=<?php echo $comment_id ?>"> <i class="far fa-trash-alt red" style="color:var(--bs-danger)"></i></a></td>
-                <td><a><i class="fas fa-edit text-muted"></i></a></td>
+                <td><a onclick="javascript: return confirm('Confirm to delete')" href="comments.php?delete=<?php echo $comment_id ?>"> <i class="far fa-trash-alt red" style="color:var(--bs-danger)"></i></a></td>
             </tr>
 
         <?php
@@ -65,7 +64,7 @@
 <?php
 
 if (isset($_GET['reject'])) {
-    $to_reject = $_GET['reject'];
+    $to_reject = mysqli_real_escape_string($data, $_GET['reject']);
     $query = "UPDATE `comments` SET `comment_status` = 'rejected' WHERE `comments`.`comment_id` = $to_reject;";
 
     $append = mysqli_query($data, $query);
@@ -74,7 +73,7 @@ if (isset($_GET['reject'])) {
 }
 
 if (isset($_GET['approve'])) {
-    $to_approve = $_GET['approve'];
+    $to_approve = mysqli_real_escape_string($data, $_GET['approve']);
     $query = "UPDATE `comments` SET `comment_status` = 'approved' WHERE `comments`.`comment_id` = $to_approve;";
 
     $append = mysqli_query($data, $query);
@@ -84,7 +83,7 @@ if (isset($_GET['approve'])) {
 
 
 if (isset($_GET['delete'])) {
-    $to_delete = $_GET['delete'];
+    $to_delete = mysqli_real_escape_string($data, $_GET['delete']);
     $query = "DELETE FROM `comments` WHERE `comments`.`comment_id` = {$to_delete};";
 
     $append = mysqli_query($data, $query);

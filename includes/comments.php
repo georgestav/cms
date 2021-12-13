@@ -1,11 +1,11 @@
                 <!-- Blog Comments -->
                 <?php
                 if (isset($_POST['submit_comment'])) {
-                    $comment_post_id = $_GET['p_id'];
+                    $comment_post_id = mysqli_real_escape_string($data, $_GET['p_id']);
                     $comment_date = date('Y-m-d');
-                    $comment_author = $_POST['comment_author'];
-                    $comment_email = $_POST['comment_email'];
-                    $comment_content = $_POST['comment_content'];
+                    $comment_author = mysqli_real_escape_string($data, $_POST['comment_author']);
+                    $comment_email = mysqli_real_escape_string($data, $_POST['comment_email']);
+                    $comment_content = mysqli_real_escape_string($data, $_POST['comment_content']);
 
                     if (empty($comment_author) || empty($comment_email) || empty($comment_content)) {
                         $message = "<div class='alert alert-warning' role='alert'>❌ Query was not succesful. You need to fill out all the fields.</div>";
@@ -20,7 +20,7 @@
                         include_once "admin/functions.php";
                         confirm_query($create_comment);
 
-                        $p_id = $_GET['p_id'];
+                        $p_id = mysqli_real_escape_string($data, $_GET['p_id']);
                         $query = "UPDATE posts SET post_comments_count = post_comments_count + 1 ";
                         $query .= "WHERE post_id =$p_id";
                         $update_comment_count = mysqli_query($data, $query);
@@ -50,7 +50,7 @@
                 <hr>
                 <div class="media d-flex flex-column">
                     <?php
-                    $p_id = $_GET['p_id'];
+                    $p_id = mysqli_real_escape_string($data, $_GET['p_id']);
                     $query = "SELECT * FROM comments WHERE comment_post_id = $p_id";
                     $results = mysqli_query($data, $query);
                     if (!$results) {

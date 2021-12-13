@@ -1,14 +1,14 @@
 <?php
+if (isset($_GET['s'])) {
+    success();
+} else if (isset($_POST['submit_user'])) {
 
-
-if (isset($_POST['submit_user'])) {
-
-    $user_role = $_POST['user_role'];
-    $user_firstname = $_POST['user_firstname'];
-    $user_lastname = $_POST['user_lastname'];
-    $user_name = $_POST['user_name'];
-    $user_password = $_POST['user_password'];
-    $user_email = $_POST['user_email'];
+    $user_role = mysqli_real_escape_string($data, $_POST['user_role']);
+    $user_firstname = mysqli_real_escape_string($data, $_POST['user_firstname']);
+    $user_lastname = mysqli_real_escape_string($data, $_POST['user_lastname']);
+    $user_name = mysqli_real_escape_string($data, $_POST['user_name']);
+    $user_password = mysqli_real_escape_string($data, $_POST['user_password']);
+    $user_email = mysqli_real_escape_string($data, $_POST['user_email']);
     $user_date = date('Y-m-d');
 
 
@@ -17,11 +17,14 @@ if (isset($_POST['submit_user'])) {
 
     // move_uploaded_file($user_image_temp, "img/$user_image");
 
-    $query = "INSERT INTO `users` (`user_role`, `user_firstname`, `user_lastname`, `user_name`, `user_password`, `user_email`, `user_image`, `user_randSalt`, `user_date`) ";
-    $query .= "VALUES ('$user_role', '$user_firstname', '$user_lastname', '$user_name', '$user_password', '$user_email', '0', '0', '$user_date')";
+    $user_password = password_hash($user_password, PASSWORD_BCRYPT, ['cost' => 12]);
+
+    $query = "INSERT INTO `users` (`user_role`, `user_firstname`, `user_lastname`, `user_name`, `user_password`, `user_email`, `user_image`, `user_date`) ";
+    $query .= "VALUES ('$user_role', '$user_firstname', '$user_lastname', '$user_name', '$user_password', '$user_email', '0', '$user_date')";
 
     $append = mysqli_query($data, $query);
-    confirm_query($append);
+    header("Location:users.php?source=add_users&s=true");
+    exit;
 }
 ?>
 

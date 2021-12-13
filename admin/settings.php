@@ -17,10 +17,14 @@
                         <li class="breadcrumb-item active">Dashboard > User Settings</li>
                     </ol>
                     <?php
+
+                    if (isset($_GET['s'])) {
+                        success();
+                    }
                     if (isset($_SESSION['user_id'])) {
                         $user_id = $_SESSION['user_id'];
                     }
-
+                    //display user data
                     $query = "SELECT * FROM users WHERE user_id = $user_id";
                     $fetched_user = mysqli_fetch_assoc(mysqli_query($data, $query));
 
@@ -32,24 +36,31 @@
                     $f_user_email = $fetched_user['user_email'];
                     $f_user_role = $fetched_user['user_role'];
                     $f_user_image = $fetched_user['user_image'];
+                    $f_user_randSalt = $fetched_user['user_randSalt'];
 
+
+                    //if form is submited
                     if (isset($_POST['update_user'])) {
                         $f_user_id = $f_user_id;
-                        $f_user_role = $_POST['user_role'];
-                        $f_user_firstname = $_POST['user_firstname'];
-                        $f_user_lastname = $_POST['user_lastname'];
-                        $f_user_name = $_POST['user_name'];
-                        $f_user_password = $_POST['user_password'];
-                        $f_user_email = $_POST['user_email'];
+                        $f_user_role = mysqli_real_escape_string($data, $_POST['user_role']);
+                        $f_user_firstname = mysqli_real_escape_string($data, $_POST['user_firstname']);
+                        $f_user_lastname = mysqli_real_escape_string($data, $_POST['user_lastname']);
+                        $f_user_name = mysqli_real_escape_string($data, $_POST['user_name']);
+                        $f_user_email = mysqli_real_escape_string($data, $_POST['user_email']);
+
+                        if (!empty($_POST['user_password'])) {
+                            $f_user_password = mysqli_real_escape_string($data, $_POST['user_password']);
+                            $f_user_password = password_hash($f_user_password, PASSWORD_BCRYPT, ['cost' => 12]);
+                        }
 
                         $query = "UPDATE `users` ";
-                        $query .= "SET `user_firstname` = '$f_user_firstname', `user_lastname` = '$f_user_lastname', `user_name` = '$f_user_name', `user_password` = '$f_user_password', `user_email` = '$f_user_email', `user_role` = '$f_user_role', `user_image` = '1', `user_randSalt` = '1'";
+                        $query .= "SET `user_firstname` = '$f_user_firstname', `user_lastname` = '$f_user_lastname', `user_name` = '$f_user_name', `user_password` = '$f_user_password', `user_email` = '$f_user_email', `user_role` = '$f_user_role', `user_image` = '1'";
                         $query .= " WHERE `user_id` = $f_user_id";
 
-
                         $append = mysqli_query($data, $query);
-                        header("Location:settings.php");
-                        confirm_query($append);
+
+                        header("Location:settings.php?s=true");
+                        exit;
                     }
 
                     ?>
@@ -94,7 +105,7 @@
                                 </div>
                                 <div class="col col-md-4">
                                     <label for="user_password" class="form-label">Password *</label>
-                                    <input type="password" class="form-control" name="user_password" value="<?php echo $f_user_password ?>" required>
+                                    <input type="password" class="form-control" name="user_password" value="">
                                 </div>
                                 <div class="col col-md-4">
                                     <label for="user_email" class="form-label">Email *</label>

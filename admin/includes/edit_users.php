@@ -1,5 +1,5 @@
 <?php
-$user_id = $_GET['user_id'];
+$user_id = mysqli_real_escape_string($data, $_GET['user_id']);
 
 
 $query = "SELECT * FROM `users` WHERE `user_id` = $user_id";
@@ -21,12 +21,11 @@ $f_user_image = $fetched_user['user_image'];
 
 if (isset($_POST['update_user'])) {
     $user_id = $f_user_id;
-    $user_role = $_POST['user_role'];
-    $user_firstname = $_POST['user_firstname'];
-    $user_lastname = $_POST['user_lastname'];
-    $user_name = $_POST['user_name'];
-    $user_password = $_POST['user_password'];
-    $user_email = $_POST['user_email'];
+    $user_role = mysqli_real_escape_string($data, $_POST['user_role']);
+    $user_firstname = mysqli_real_escape_string($data, $_POST['user_firstname']);
+    $user_lastname = mysqli_real_escape_string($data, $_POST['user_lastname']);
+    $user_name = mysqli_real_escape_string($data, $_POST['user_name']);
+    $user_email = mysqli_real_escape_string($data, $_POST['user_email']);
 
 
     // $user_image = $_FILES['image']['name'] ?? 0;
@@ -44,7 +43,7 @@ if (isset($_POST['update_user'])) {
     // }
 
     $query = "UPDATE `users` ";
-    $query .= "SET `user_firstname` = '$user_firstname', `user_lastname` = '$user_lastname', `user_name` = '$user_name', `user_password` = '$user_password', `user_email` = '$user_email', `user_role` = '$user_role', `user_image` = '1', `user_randSalt` = '1'";
+    $query .= "SET `user_firstname` = '$user_firstname', `user_lastname` = '$user_lastname', `user_name` = '$user_name', `user_email` = '$user_email', `user_role` = '$user_role', `user_image` = '1'";
     $query .= " WHERE `user_id` = $f_user_id";
 
 
@@ -94,10 +93,6 @@ if (isset($_POST['update_user'])) {
             <div class="col col-md-4">
                 <label for="user_name" class="form-label">Username *</label>
                 <input type="text" class="form-control" name="user_name" value="<?php echo $f_username ?>" required>
-            </div>
-            <div class="col col-md-4">
-                <label for="user_password" class="form-label">Password *</label>
-                <input type="password" class="form-control" name="user_password" value="<?php echo $f_user_password ?>" required>
             </div>
             <div class="col col-md-4">
                 <label for="user_email" class="form-label">Email *</label>

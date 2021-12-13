@@ -17,7 +17,7 @@
                     </ol>
                     <?php
                     if (isset($_GET['source'])) {
-                        $source = $_GET['source'];
+                        $source = mysqli_real_escape_string($data, $_GET['source']);
                     }
 
                     switch ($source ?? 0) {

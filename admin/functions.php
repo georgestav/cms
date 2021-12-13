@@ -1,4 +1,11 @@
 <?php
+function success()
+{
+    echo "<div class='alert alert-success' role='alert'>✅ Your query was successful!</div>";
+}
+
+
+
 function confirm_query($append)
 {
     global $data;
@@ -14,21 +21,15 @@ function confirm_query($append)
     }
 }
 
-function confirm_query_posts($append, $post_id)
+function confirm_query_posts($post_id)
 {
-    global $data;
-    if (!$append) {
-        $message = "<div class='alert alert-warning' role='alert'>
-            ❌ Query was not succesful.
-          </div>";
-        die($message . mysqli_error($data));
-    } else {
+
 ?>
-        <div class='alert alert-success' role='alert'>
-            ✅ Your query was successful! View it live: <a href="../post.php?p_id=<?php echo $post_id ?>" target="_blank">here</a>
-        </div>
+    <div class='alert alert-success' role='alert'>
+        ✅ Your query was successful! View it live: <a href="../post.php?p_id=<?php echo $post_id ?>" target="_blank">here</a>
+    </div>
     <?php }
-}
+
 // add a category
 function insert_categories()
 {
@@ -68,8 +69,8 @@ function display_categories()
         <tr>
             <td><?php echo $category['cat_id'] ?></td>
             <td><?php echo $category['cat_title'] ?></td>
-            <td><a href="categories.php?delete=<?php echo $category['cat_id'] ?>"> <i class="far fa-trash-alt red" style="color:var(--bs-danger)"></i></a></td>
             <td><a href="categories.php?edit=<?php echo $category['cat_id'] ?>"><i class="fas fa-edit"></i></a></td>
+            <td><a onclick="javascript: return confirm('Confirm to delete')" href="categories.php?delete=<?php echo $category['cat_id'] ?>"> <i class="far fa-trash-alt red" style="color:var(--bs-danger)"></i></a></td>
         </tr>
 
     <?php
@@ -83,7 +84,7 @@ function delete_categories()
 {
     global $data;
     if (isset($_GET['delete'])) {
-        $delete_id =  $_GET['delete'];
+        $delete_id =  mysqli_real_escape_string($data, $_GET['delete']);
 
         $query = "DELETE FROM categories WHERE cat_id = {$delete_id}";
         $delete_query = mysqli_query($data, $query);

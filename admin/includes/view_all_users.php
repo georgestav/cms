@@ -45,7 +45,7 @@
                 <td><?php echo $user_image ?></td>
 
                 <td><a href="users.php?source=edit_users&user_id=<?php echo $user_id ?>"><i class="fas fa-edit text-muted"></i></a></td>
-                <td><a href="users.php?delete=<?php echo $user_id ?>"> <i class="far fa-trash-alt red" style="color:var(--bs-danger)"></i></a></td>
+                <td><a onclick="javascript: return confirm('Confirm to delete')" href="users.php?delete=<?php echo $user_id ?>"> <i class="far fa-trash-alt red" style="color:var(--bs-danger)"></i></a></td>
             </tr>
 
         <?php
@@ -55,7 +55,7 @@
 </table>
 
 <?php
-if (isset($_GET['delete'])) {
+if (isset($_GET['delete']) && $_SESSION['user_role'] === 'admin') {
     $to_delete = $_GET['delete'];
     $query = "DELETE FROM `users` WHERE `users`.`user_id` = {$to_delete};";
 

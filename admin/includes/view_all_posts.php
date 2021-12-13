@@ -62,7 +62,7 @@
                 <td><a href="posts.php?publish=<?php echo $post_id ?>"><i class="fas fa-check text-muted"></i></td>
                 <td><a href="posts.php?unpublish=<?php echo $post_id ?>"><i class="fas fa-ban text-muted"></i></td>
                 <td><a href="posts.php?source=edit_post&p_id=<?php echo $post_id ?>"><i class="fas fa-edit"></i></a></td>
-                <td><a href="posts.php?delete=<?php echo $post_id ?>"> <i class="far fa-trash-alt red" style="color:var(--bs-danger)"></i></a></td>
+                <td><a onclick="javascript: return confirm('Confirm to delete')" href="posts.php?delete=<?php echo $post_id ?>"> <i class="far fa-trash-alt red" style="color:var(--bs-danger)"></i></a></td>
 
             </tr>
         <?php
@@ -73,7 +73,7 @@
 
 <?php
 if (isset($_GET['delete'])) {
-    $to_delete = $_GET['delete'];
+    $to_delete = mysqli_real_escape_string($data, $_GET['delete']);
     $query = "DELETE FROM `posts` WHERE `posts`.`post_id` = {$to_delete};";
 
     $append = mysqli_query($data, $query);
@@ -81,7 +81,7 @@ if (isset($_GET['delete'])) {
     confirm_query($append);
 }
 if (isset($_GET['unpublish'])) {
-    $to_unpublish = $_GET['unpublish'];
+    $to_unpublish = mysqli_real_escape_string($data, $_GET['unpublish']);
     $query = "UPDATE `posts` SET `post_status` = 'unpublished' WHERE `posts`.`post_id` = $to_unpublish;";
 
     $append = mysqli_query($data, $query);
@@ -90,7 +90,7 @@ if (isset($_GET['unpublish'])) {
 }
 
 if (isset($_GET['publish'])) {
-    $to_approve = $_GET['publish'];
+    $to_approve = mysqli_real_escape_string($data, $_GET['publish']);
     $query = "UPDATE `posts` SET `post_status` = 'published' WHERE `posts`.`post_id` = $to_approve;";
 
     $append = mysqli_query($data, $query);

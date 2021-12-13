@@ -20,7 +20,7 @@ include 'includes/header.php';
                     if (!$count) {
                         echo 'No posts found, try another search';
                     } else {
-                        echo $count . ' posts found with matching tags of ' . $_POST['search'];
+                        echo $count . ' posts found with matching tags of ' . mysqli_real_escape_string($data, $_POST['search']);
                     }
 
                     foreach (mysqli_fetch_all($search_query, MYSQLI_ASSOC) as $post) {

@@ -1,6 +1,6 @@
 <?php
 if (isset($_GET['p_id'])) {
-    $p_id = $_GET['p_id'];
+    $p_id = mysqli_real_escape_string($data, $_GET['p_id']);
 }
 
 
@@ -53,7 +53,7 @@ $f_status = $featured['post_status'];
     <!-- Featured blog post appended with php dynamicaly generated content-->
     <div class="card mb-4">
         <img class="card-img-top" src="img/<?php echo $f_image; ?>" alt="" />
-        <?php if ($_SESSION['user_role'] === 'admin') {
+        <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
         ?>
             <a class='btn btn-outline-secondary btn-sm rounded-0 rounded-bottom' href='admin/posts.php?source=edit_post&p_id=<?php echo $f_id ?>'>Edit post</a>
         <?php

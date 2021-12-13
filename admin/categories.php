@@ -34,7 +34,7 @@
                                 <!-- call cat_edit form to update the selected category -->
                                 <?php
                                 if (isset($_GET['edit'])) {
-                                    $cat_id = $_GET['edit'];
+                                    $cat_id = mysqli_real_escape_string($data, $_GET['edit']);
                                     include "includes/cat_edit.php";
                                 }
                                 ?>
